@@ -1,0 +1,4 @@
+node_modules/
+saidas/*
+!saidas/.gitkeep
+.DS_Store

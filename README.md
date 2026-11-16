@@ -1,6 +1,6 @@
 # Social Mídia GPT
 
-Um "social media + redator + analista de SEO" que roda no ChatGPT, **pra qualquer marca**. Faz:
+Um "social media + redator + analista de SEO" que roda no **ChatGPT** e no **Codex**, **pra qualquer marca**. Faz:
 
 - **Carrosséis** de Instagram/LinkedIn (texto, visual em HTML, PNGs e legenda)
 - **Copy pra posts** (post único, legenda, roteiro de Reels, LinkedIn)
@@ -45,6 +45,18 @@ Instala uma vez e fica salvo na sua barra lateral.
 3. Cole logo em seguida a sua ficha da marca preenchida (ou deixe o GPT te entrevistar, é rápido).
 4. Peça o que quiser. Vale para aquela conversa; numa conversa nova, cole de novo.
 5. Se o ChatGPT não deixar baixar arquivo, peça "mostra o HTML num bloco de código" e salve como `carrossel.html`.
+
+### Opção C: Codex (OpenAI Codex CLI, app ou extensão de IDE)
+O Codex trabalha direto numa pasta e lê o arquivo `AGENTS.md` sozinho, então não precisa colar nada.
+
+1. Clone ou baixe este repositório: `git clone https://github.com/maticdlc/social-midia-gpt.git` e entre na pasta.
+2. Abra o Codex nessa pasta (por exemplo, rode `codex` no terminal dentro dela).
+3. Peça: "Cria um carrossel sobre [tema]". Na primeira vez ele te entrevista e preenche o `ficha-marca.md`; nas próximas, reaproveita.
+4. Os resultados ficam em `saidas/` (carrossel em HTML, PNGs 1080x1350, legenda, posts, e-mails, SEO). A pasta não vai pro Git.
+5. Pra gerar os PNGs ele roda `node scripts/render.cjs`; precisa do Node e do Playwright (`npm i playwright && npx playwright install chromium`). Se faltar, o Codex avisa ou instala.
+6. Pra pesquisa de SEO, habilite a busca na web nas configurações do Codex; sem ela, ele entrega só o que não depende de pesquisa.
+
+Diferenças pro ChatGPT: o Codex salva os arquivos no seu computador e gera os PNGs sozinho (no ChatGPT você clica em "Baixar PNGs"). O uso de arquivos de conhecimento e instruções é o mesmo conteúdo, só muda a forma de entrada.
 
 ### Se algo não funcionar
 - **Não consigo criar GPT:** seu plano é gratuito. Use a Opção B.
@@ -99,9 +111,12 @@ São 6 passos: demanda, concorrência, on-page, conteúdo, monitoramento e GEO. 
 ```
 .
 ├── README.md                       este arquivo
+├── AGENTS.md                       instruções pro Codex (lidas automaticamente)
 ├── ficha-marca.md                  modelo da ficha: preencha com a sua marca
 ├── instrucoes-gpt.md               instruções do GPT (cabe no limite de 8.000 caracteres)
 ├── prompt-unico-chatgpt.md         tudo em um arquivo só, pra colar no chat
+├── scripts/render.cjs              gera os PNGs dos slides (Codex / terminal)
+├── saidas/                         onde o Codex salva o que produz (fora do Git)
 └── conhecimento/
     ├── carrossel-guia.md           estrutura, layouts, regras de texto e legenda
     ├── seo-guia.md                 os 6 passos de SEO/GEO
