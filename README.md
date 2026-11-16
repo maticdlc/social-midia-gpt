@@ -1,8 +1,17 @@
 # Social Mídia GPT
 
-Um "social media + analista de SEO" que roda no ChatGPT. Cria **carrosséis de Instagram/LinkedIn** (texto, visual em HTML, PNGs e legenda) e planeja **SEO, Google Meu Negócio, Google Ads e GEO** (aparecer em IAs), tudo no tom de voz e na identidade visual da Mizy.
+Um "social media + analista de SEO" que roda no ChatGPT, **pra qualquer marca**. Cria **carrosséis de Instagram/LinkedIn** (texto, visual em HTML, PNGs e legenda) e planeja **SEO, Google Meu Negócio, Google Ads e GEO** (aparecer em IAs).
 
-Versão para ChatGPT das skills `/carrossel` e `/seo` do MazyOS.
+Nada vem fixo: cada pessoa preenche a **ficha da marca** (tom de voz, cores, fonte, logo, @) e o GPT usa isso em tudo que produz. Serve pra quem tem uma marca ou pra agência com vários clientes (uma ficha por cliente).
+
+## Primeiro passo: a ficha da marca
+
+Preencha [`ficha-marca.md`](ficha-marca.md) com: nome e o que faz, cidade e público, tom de voz (adjetivos, frase exemplo, o que evitar, emoji), @ e chamada pra ação, cores em hex, fonte e logo. Pode ser só o que você sabe: se faltar algo, o GPT pergunta ou sugere paletas pro seu segmento.
+
+- **GPT personalizado:** envie a ficha como arquivo de conhecimento.
+- **Prompt único:** cole a ficha logo depois do prompt.
+- **Sem ficha:** o GPT te entrevista no começo da conversa e confirma um resumo antes de produzir.
+- **Agência:** uma ficha por cliente; peça pro GPT trocar de ficha quando mudar de cliente.
 
 ## O que ele faz
 
@@ -19,9 +28,10 @@ Versão para ChatGPT das skills `/carrossel` e `/seo` do MazyOS.
 Monta uma vez e fica salvo.
 
 1. ChatGPT → **Explorar GPTs → Criar** → aba **Configurar**.
-2. **Nome:** Social Mídia Mizy. **Descrição:** Cria carrosséis e planeja SEO/GEO/Google Ads no tom da Mizy.
+2. **Nome:** Social Mídia. **Descrição:** Cria carrosséis e planeja SEO/GEO/Google Ads no tom e na identidade visual da sua marca.
 3. **Instruções:** cole o conteúdo de [`instrucoes-gpt.md`](instrucoes-gpt.md).
-4. **Conhecimento:** envie os 3 arquivos de [`conhecimento/`](conhecimento):
+4. **Conhecimento:** envie os arquivos de [`conhecimento/`](conhecimento):
+   - `ficha-marca.md` (preenchida com os dados da SUA marca)
    - `carrossel-guia.md`
    - `seo-guia.md`
    - `template-carrossel.html`
@@ -36,8 +46,9 @@ Monta uma vez e fica salvo.
 ### Opção B: prompt único (qualquer plano, inclusive grátis)
 1. Abra [`prompt-unico-chatgpt.md`](prompt-unico-chatgpt.md) e copie **tudo abaixo da primeira linha `---`**.
 2. Cole no começo de um chat novo e ative a pesquisa na web.
-3. Peça o que quiser. Vale para aquele chat.
-4. Se o ChatGPT não deixar baixar arquivo, peça "mostra o HTML num bloco de código" e salve como `carrossel.html`.
+3. Cole também a sua ficha da marca preenchida (ou deixe o GPT te entrevistar, é rápido).
+4. Peça o que quiser. Vale para aquele chat.
+5. Se o ChatGPT não deixar baixar arquivo, peça "mostra o HTML num bloco de código" e salve como `carrossel.html`.
 
 ## Fluxo do carrossel
 
@@ -57,22 +68,18 @@ São 8 passos: demanda, concorrência, Google Meu Negócio, on-page, conteúdo, 
 ```
 .
 ├── README.md                       este arquivo
+├── ficha-marca.md                  modelo da ficha: preencha com a sua marca
 ├── instrucoes-gpt.md               instruções do GPT (cabe no limite de 8.000 caracteres)
 ├── prompt-unico-chatgpt.md         tudo em um arquivo só, pra colar no chat
 └── conhecimento/
     ├── carrossel-guia.md           estrutura, layouts, regras de texto e legenda
     ├── seo-guia.md                 os 8 passos de SEO/GEO/Ads
-    └── template-carrossel.html     modelo visual dos slides + botão de baixar PNG
+    └── template-carrossel.html     modelo visual dos slides (cores e fonte via variáveis) + botão de baixar PNG
 ```
 
-## Usar com outra marca
+## Personalização
 
-Troque estes pontos e reenvie os arquivos pro GPT:
-
-1. `instrucoes-gpt.md`: seções "Quem é a Mizy" e "Tom de voz" (nome, serviços, @, slogan, o que evitar).
-2. `conhecimento/carrossel-guia.md`: seção "Visual" (cores e fonte).
-3. `conhecimento/template-carrossel.html`: variáveis de cor no `:root`, a fonte do Google Fonts e o SVG do selo.
-4. Gere de novo o `prompt-unico-chatgpt.md` juntando os arquivos (instruções, guias e template), se for usar a Opção B.
+Tudo é configurável pela ficha, sem editar código. Quem quiser ir além pode mexer no `conhecimento/template-carrossel.html`: as cores e a fonte ficam nas variáveis do `:root`, no topo do arquivo. Se mudar qualquer arquivo, reenvie ao GPT (ou gere de novo o `prompt-unico-chatgpt.md`, que é a soma das instruções, guias e template).
 
 ## Limites
 

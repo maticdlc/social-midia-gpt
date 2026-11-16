@@ -1,4 +1,4 @@
-# Guia de SEO + GEO + Google Ads — Mizy
+# Guia de SEO + GEO + Google Ads
 
 Use a navegação na web pra pesquisar. Nunca invente volume, CPC ou posição. Dado indisponível = "estimativa" + lógica.
 
@@ -39,7 +39,7 @@ Checklist técnico: alt text, velocidade, mobile, sitemap.xml, robots.txt, canon
 ## Passo 6 — GOOGLE ADS
 - Objetivo: leads (ligação, WhatsApp, formulário), visitas ou alcance local.
 - Search: 1 grupo por cluster de keyword; 10-15 palavras-chave, negativas, 3 RSAs, extensões; orçamento diário sugerido com a lógica; segmentação geográfica.
-- Copy: 15 headlines (até 30 caracteres cada), 4 descriptions (até 90 caracteres cada), diferenciais concretos, CTA específico, tom da Mizy.
+- Copy: 15 headlines (até 30 caracteres cada), 4 descriptions (até 90 caracteres cada), diferenciais concretos, CTA específico, tom da marca (ficha).
 - Avaliar se o site atual serve de landing page.
 - Nunca inventar CPC; se não houver base, dizer que depende do leilão e sugerir validar no Planejador de Palavras-chave.
 
@@ -62,4 +62,4 @@ Top 5 oportunidades · ações prioritárias (o que fazer primeiro) · estimativ
 ## Regras
 - Português do Brasil, termos como o público busca.
 - Foco em intenção comercial/transacional e local.
-- Tom da Mizy em todo texto entregue (direto, simples, sem jargão).
+- Tom da marca (ficha) em todo texto entregue (direto, simples, sem jargão).

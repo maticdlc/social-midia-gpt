@@ -2,31 +2,44 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<title>Carrossel Mizy</title>
+<title>Carrossel</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <!--
-  TEMPLATE DE CARROSSEL MIZY (1080x1350).
+  TEMPLATE DE CARROSSEL (1080x1350) — serve pra qualquer marca.
   INSTRUÇÕES PRO GPT:
-  - Copie este arquivo inteiro e só troque o conteúdo dos <div class="slide">.
-  - Mantenha CSS e <script> intactos. Copie/cole/remova slides conforme o roteiro (5 a 10).
-  - Fundos: .dark (grafite), .light (creme), .brand (terracota). Nunca dois iguais seguidos.
-  - Atualize o contador "1 / N" em cada slide (N = total).
-  - Palavra de impacto do título: <em>palavra</em> (fica terracota; em .brand fica grafite).
-  - No slide .brand use o selo invertido (classe .selo-inv); nos outros, selo normal (.selo).
+  1. Preencha as variáveis do :root com a FICHA DA MARCA do usuário (cores em hex, fonte).
+     Se o usuário não tem identidade definida, use os valores padrão neutros que já estão aqui.
+  2. Troque os marcadores: {{MARCA}} (nome), {{INICIAL}} (1 ou 2 letras do nome, vira o logo),
+     {{HANDLE}} (@ da rede), {{SLOGAN}}, {{CTA}} (chamada do slide final).
+     Se o usuário enviou logo, substitua <div class="logo">...</div> por
+     <img class="logo-img" src="DATA-URI-DA-LOGO"> (use o Code Interpreter pra converter em base64).
+  3. Troque o link do Google Fonts e --fonte se a ficha tiver outra fonte.
+  4. Mantenha o resto do CSS e o <script> intactos. Copie/cole/remova slides (5 a 10).
+  5. Fundos: .dark, .light e .brand. Nunca dois iguais seguidos. Atualize o contador "1 / N".
+  6. Palavra de impacto do título: <em>palavra</em>.
+  7. Contraste: se o texto sobre a cor da marca ficar ilegível, ajuste --texto-sobre-marca (escuro ou claro).
 -->
 <style>
   :root{
-    --terra:#D97757; --terra-esc:#B5532F; --terra-fund:#7A3517;
-    --grafite:#1A1A1A; --card:#232323;
-    --creme:#FBF8F3; --creme2:#FFF8F3;
-    --texto-escuro:#F5F5F4; --texto-suave:#55524D; --pilula:#FFEDE0;
+    /* PREENCHER COM A FICHA DA MARCA (valores abaixo são neutros, de exemplo) */
+    --terra:#2F6FED;            /* cor da marca */
+    --terra-esc:#1F4FB5;        /* cor da marca mais escura (texto pequeno sobre fundo claro) */
+    --texto-sobre-marca:#FFFFFF;/* texto sobre fundo na cor da marca (escolha pelo contraste) */
+    --grafite:#161616;          /* fundo escuro e texto sobre claro */
+    --card:#232323;             /* cartões sobre fundo escuro */
+    --creme:#F7F7F5;            /* fundo claro */
+    --creme2:#FFFFFF;           /* branco/claro de apoio */
+    --texto-escuro:#F5F5F4;     /* texto sobre fundo escuro */
+    --texto-suave:#55524D;      /* texto de apoio sobre fundo claro */
+    --pilula:#E8F0FF;           /* fundo de etiquetas (versão bem clara da cor da marca) */
+    --fonte:'Nunito',sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:#2b2b2b;font-family:'Nunito',sans-serif;padding:24px;color:var(--grafite)}
+  body{background:#2b2b2b;font-family:var(--fonte);padding:24px;color:var(--grafite)}
   .barra{position:sticky;top:0;z-index:10;display:flex;gap:12px;align-items:center;justify-content:center;
     background:#2b2b2bee;padding:12px;margin:-24px -24px 24px}
-  .barra button{font:800 16px 'Nunito',sans-serif;background:var(--terra);color:var(--grafite);border:0;
+  .barra button{font:800 16px var(--fonte);background:var(--terra);color:var(--texto-sobre-marca);border:0;
     padding:12px 22px;border-radius:14px;cursor:pointer}
   .barra span{color:#bbb;font-size:14px}
   .wrap{display:flex;flex-direction:column;gap:32px;align-items:center}
@@ -34,31 +47,34 @@
     display:flex;flex-direction:column;justify-content:center;flex:none;zoom:.6}
   .dark{background:var(--grafite);color:var(--texto-escuro)}
   .light{background:var(--creme);color:var(--grafite)}
-  .brand{background:var(--terra);color:var(--grafite)}
+  .brand{background:var(--terra);color:var(--texto-sobre-marca)}
 
   /* topo e rodapé */
   .topo{position:absolute;top:54px;left:90px;right:90px;display:flex;justify-content:space-between;align-items:center}
   .marca{display:flex;align-items:center;gap:14px;font-weight:800;font-size:34px;letter-spacing:0}
-  .marca svg{width:60px;height:60px}
+  .logo{width:60px;height:60px;border-radius:29%;background:var(--terra);color:var(--texto-sobre-marca);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:30px}
+  .logo-img{height:60px;width:auto}
+  .brand .logo{background:var(--creme2);color:var(--terra-esc)}
   .cont{font-weight:600;font-size:16px;letter-spacing:.18em;opacity:.6}
   .rodape{position:absolute;bottom:50px;left:90px;right:90px;padding-top:22px;font-weight:600;font-size:18px;
     display:flex;justify-content:space-between;opacity:.75}
   .dark .rodape{border-top:1px solid rgba(255,255,255,.12)}
   .light .rodape{border-top:1px solid #EADFD3}
-  .brand .rodape{border-top:1px solid rgba(26,26,26,.25)}
+  .brand .rodape{border-top:1px solid rgba(255,255,255,.3)}
 
   /* tipografia */
   .kicker{font-weight:800;font-size:18px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:26px}
   .light .kicker{color:var(--terra-esc)}
-  .brand .kicker{color:var(--grafite)}
+  .brand .kicker{color:var(--texto-sobre-marca)}
   .regua{width:72px;height:4px;border-radius:4px;background:var(--terra);margin:0 0 34px}
   .light .regua{background:var(--terra-esc)}
-  .brand .regua{background:var(--grafite)}
+  .brand .regua{background:var(--texto-sobre-marca)}
   h1{font-weight:800;font-size:108px;line-height:1.02;letter-spacing:-.015em}
   h2{font-weight:800;font-size:76px;line-height:1.06;letter-spacing:-.015em;margin-bottom:34px}
   h1 em,h2 em{font-style:normal;color:var(--terra)}
   .light h1 em,.light h2 em{color:var(--terra-esc)}
-  .brand h1 em,.brand h2 em{color:var(--creme2)}
+  .brand h1 em,.brand h2 em{color:var(--texto-sobre-marca);text-decoration:underline;text-decoration-thickness:6px;text-underline-offset:10px}
   p{font-weight:500;font-size:34px;line-height:1.5;max-width:860px}
   .light p{color:var(--texto-suave)}
   .sub{margin-top:36px;font-size:36px;opacity:.85}
@@ -76,7 +92,7 @@
   /* layout LISTA */
   .item{display:flex;gap:26px;align-items:flex-start;background:var(--card);border-radius:22px;padding:30px 34px;margin-bottom:22px}
   .light .item{background:#fff;border:1px solid #EADFD3}
-  .num{flex:none;width:64px;height:64px;border-radius:16px;background:var(--terra);color:var(--grafite);
+  .num{flex:none;width:64px;height:64px;border-radius:16px;background:var(--terra);color:var(--texto-sobre-marca);
     font-weight:800;font-size:34px;display:flex;align-items:center;justify-content:center}
   .item p{font-size:30px;line-height:1.4}
   .item b{font-weight:800}
@@ -84,11 +100,11 @@
   /* pílula e botão */
   .pill{display:inline-block;background:var(--pilula);color:var(--terra-esc);font-weight:800;font-size:20px;
     padding:10px 22px;border-radius:999px;margin-bottom:28px;align-self:flex-start}
-  .botao{display:inline-block;margin-top:44px;background:var(--grafite);color:var(--creme2);font-weight:800;
+  .botao{display:inline-block;margin-top:44px;background:var(--grafite);color:#fff;font-weight:800;
     font-size:34px;padding:26px 52px;border-radius:999px;align-self:flex-start}
   .centro{align-items:center;text-align:center}
   .centro .botao{align-self:center}
-  .centro .selo-grande{width:200px;height:200px;margin-bottom:40px}
+  .centro .selo-grande{width:200px;height:200px;margin-bottom:40px;font-size:96px}
 </style>
 </head>
 <body>
@@ -101,51 +117,51 @@
 
   <!-- 1. CAPA (escuro) -->
   <div class="slide dark">
-    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">1 / 5</div></div>
+    <div class="topo"><div class="marca"><div class="logo">{{INICIAL}}</div><span>{{MARCA}}</span></div><div class="cont">1 / 5</div></div>
     <div class="kicker">CATEGORIA DO POST</div>
     <h1>Título da capa com <em>palavra de impacto</em></h1>
     <p class="sub">Subtítulo curto que explica a promessa do carrossel.</p>
-    <div class="rodape"><span>@mizy.io</span><span>Arrasta pro lado →</span></div>
+    <div class="rodape"><span>{{HANDLE}}</span><span>Arrasta pro lado →</span></div>
   </div>
 
   <!-- 2. TEXTO (claro) -->
   <div class="slide light">
-    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">2 / 5</div></div>
+    <div class="topo"><div class="marca"><div class="logo">{{INICIAL}}</div><span>{{MARCA}}</span></div><div class="cont">2 / 5</div></div>
     <div class="kicker">Primeiro ponto</div>
     <h2>Um insight por <em>slide</em></h2>
     <div class="regua"></div>
     <p>Parágrafo curto, em frases naturais, do jeito que o cliente fala. Máximo de 30 palavras.</p>
-    <div class="rodape"><span>@mizy.io</span><span>mizy</span></div>
+    <div class="rodape"><span>{{HANDLE}}</span><span>{{MARCA}}</span></div>
   </div>
 
   <!-- 3. NÚMERO (escuro) -->
   <div class="slide dark">
-    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">3 / 5</div></div>
+    <div class="topo"><div class="marca"><div class="logo">{{INICIAL}}</div><span>{{MARCA}}</span></div><div class="cont">3 / 5</div></div>
     <div class="numero">3s</div>
     <h2>Frase que explica o <em>número</em></h2>
     <p>Texto de apoio curto que dá contexto ao dado.</p>
-    <div class="rodape"><span>@mizy.io</span><span>mizy</span></div>
+    <div class="rodape"><span>{{HANDLE}}</span><span>{{MARCA}}</span></div>
   </div>
 
   <!-- 4. LISTA (claro) -->
   <div class="slide light">
-    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">4 / 5</div></div>
+    <div class="topo"><div class="marca"><div class="logo">{{INICIAL}}</div><span>{{MARCA}}</span></div><div class="cont">4 / 5</div></div>
     <div class="kicker">Passo a passo</div>
     <h2>Título da <em>lista</em></h2>
     <div class="item"><div class="num">1</div><p><b>Item um.</b> Explicação curta.</p></div>
     <div class="item"><div class="num">2</div><p><b>Item dois.</b> Explicação curta.</p></div>
     <div class="item"><div class="num">3</div><p><b>Item três.</b> Explicação curta.</p></div>
-    <div class="rodape"><span>@mizy.io</span><span>mizy</span></div>
+    <div class="rodape"><span>{{HANDLE}}</span><span>{{MARCA}}</span></div>
   </div>
 
-  <!-- 5. CTA FINAL (terracota) -->
+  <!-- 5. CTA FINAL (cor da marca) -->
   <div class="slide brand centro">
     <div class="topo"><div class="marca"></div><div class="cont">5 / 5</div></div>
-    <svg class="selo-grande selo-inv" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#FFF8F3"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#D97757" stroke="#D97757" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>
+    <div class="logo selo-grande">{{INICIAL}}</div>
     <h2>Headline curta de <em>ação</em></h2>
     <p>Uma linha dizendo o que acontece quando a pessoa age.</p>
-    <div class="botao">Manda SITE no direct</div>
-    <div class="rodape"><span>@mizy.io</span><span>Tecnologia pra empresa, sem complicar</span></div>
+    <div class="botao">{{CTA}}</div>
+    <div class="rodape"><span>{{HANDLE}}</span><span>{{SLOGAN}}</span></div>
   </div>
 
   <!--
