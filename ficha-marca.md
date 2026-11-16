@@ -15,6 +15,7 @@
 ## Redes e contato
 - **@ do Instagram / LinkedIn:**
 - **Site:**
+- **Nome e e-mail do remetente** (se for fazer e-mail marketing):
 - **Chamada pra ação preferida** (ex.: "chama no WhatsApp", "link na bio", "manda ORÇAMENTO no direct"):
 
 ## Tom de voz
