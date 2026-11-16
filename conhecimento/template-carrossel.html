@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Carrossel Mizy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--
+  TEMPLATE DE CARROSSEL MIZY (1080x1350).
+  INSTRUÇÕES PRO GPT:
+  - Copie este arquivo inteiro e só troque o conteúdo dos <div class="slide">.
+  - Mantenha CSS e <script> intactos. Copie/cole/remova slides conforme o roteiro (5 a 10).
+  - Fundos: .dark (grafite), .light (creme), .brand (terracota). Nunca dois iguais seguidos.
+  - Atualize o contador "1 / N" em cada slide (N = total).
+  - Palavra de impacto do título: <em>palavra</em> (fica terracota; em .brand fica grafite).
+  - No slide .brand use o selo invertido (classe .selo-inv); nos outros, selo normal (.selo).
+-->
+<style>
+  :root{
+    --terra:#D97757; --terra-esc:#B5532F; --terra-fund:#7A3517;
+    --grafite:#1A1A1A; --card:#232323;
+    --creme:#FBF8F3; --creme2:#FFF8F3;
+    --texto-escuro:#F5F5F4; --texto-suave:#55524D; --pilula:#FFEDE0;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#2b2b2b;font-family:'Nunito',sans-serif;padding:24px;color:var(--grafite)}
+  .barra{position:sticky;top:0;z-index:10;display:flex;gap:12px;align-items:center;justify-content:center;
+    background:#2b2b2bee;padding:12px;margin:-24px -24px 24px}
+  .barra button{font:800 16px 'Nunito',sans-serif;background:var(--terra);color:var(--grafite);border:0;
+    padding:12px 22px;border-radius:14px;cursor:pointer}
+  .barra span{color:#bbb;font-size:14px}
+  .wrap{display:flex;flex-direction:column;gap:32px;align-items:center}
+  .slide{width:1080px;height:1350px;position:relative;overflow:hidden;padding:110px 90px;
+    display:flex;flex-direction:column;justify-content:center;flex:none;zoom:.6}
+  .dark{background:var(--grafite);color:var(--texto-escuro)}
+  .light{background:var(--creme);color:var(--grafite)}
+  .brand{background:var(--terra);color:var(--grafite)}
+
+  /* topo e rodapé */
+  .topo{position:absolute;top:54px;left:90px;right:90px;display:flex;justify-content:space-between;align-items:center}
+  .marca{display:flex;align-items:center;gap:14px;font-weight:800;font-size:34px;letter-spacing:0}
+  .marca svg{width:60px;height:60px}
+  .cont{font-weight:600;font-size:16px;letter-spacing:.18em;opacity:.6}
+  .rodape{position:absolute;bottom:50px;left:90px;right:90px;padding-top:22px;font-weight:600;font-size:18px;
+    display:flex;justify-content:space-between;opacity:.75}
+  .dark .rodape{border-top:1px solid rgba(255,255,255,.12)}
+  .light .rodape{border-top:1px solid #EADFD3}
+  .brand .rodape{border-top:1px solid rgba(26,26,26,.25)}
+
+  /* tipografia */
+  .kicker{font-weight:800;font-size:18px;letter-spacing:.1em;text-transform:uppercase;color:var(--terra);margin-bottom:26px}
+  .light .kicker{color:var(--terra-esc)}
+  .brand .kicker{color:var(--grafite)}
+  .regua{width:72px;height:4px;border-radius:4px;background:var(--terra);margin:0 0 34px}
+  .light .regua{background:var(--terra-esc)}
+  .brand .regua{background:var(--grafite)}
+  h1{font-weight:800;font-size:108px;line-height:1.02;letter-spacing:-.015em}
+  h2{font-weight:800;font-size:76px;line-height:1.06;letter-spacing:-.015em;margin-bottom:34px}
+  h1 em,h2 em{font-style:normal;color:var(--terra)}
+  .light h1 em,.light h2 em{color:var(--terra-esc)}
+  .brand h1 em,.brand h2 em{color:var(--creme2)}
+  p{font-weight:500;font-size:34px;line-height:1.5;max-width:860px}
+  .light p{color:var(--texto-suave)}
+  .sub{margin-top:36px;font-size:36px;opacity:.85}
+
+  /* layout NÚMERO */
+  .numero{font-weight:800;font-size:300px;line-height:.9;color:var(--terra);letter-spacing:-.03em;margin-bottom:10px}
+  .light .numero{color:var(--terra-esc)}
+
+  /* layout CITAÇÃO */
+  .aspas{position:absolute;top:150px;left:70px;font-weight:800;font-size:520px;line-height:1;color:var(--terra);opacity:.18}
+  .citacao{font-weight:800;font-size:68px;line-height:1.12;letter-spacing:-.01em;position:relative}
+  .autor{margin-top:34px;font-weight:700;font-size:26px;color:var(--terra)}
+  .light .autor{color:var(--terra-esc)}
+
+  /* layout LISTA */
+  .item{display:flex;gap:26px;align-items:flex-start;background:var(--card);border-radius:22px;padding:30px 34px;margin-bottom:22px}
+  .light .item{background:#fff;border:1px solid #EADFD3}
+  .num{flex:none;width:64px;height:64px;border-radius:16px;background:var(--terra);color:var(--grafite);
+    font-weight:800;font-size:34px;display:flex;align-items:center;justify-content:center}
+  .item p{font-size:30px;line-height:1.4}
+  .item b{font-weight:800}
+
+  /* pílula e botão */
+  .pill{display:inline-block;background:var(--pilula);color:var(--terra-esc);font-weight:800;font-size:20px;
+    padding:10px 22px;border-radius:999px;margin-bottom:28px;align-self:flex-start}
+  .botao{display:inline-block;margin-top:44px;background:var(--grafite);color:var(--creme2);font-weight:800;
+    font-size:34px;padding:26px 52px;border-radius:999px;align-self:flex-start}
+  .centro{align-items:center;text-align:center}
+  .centro .botao{align-self:center}
+  .centro .selo-grande{width:200px;height:200px;margin-bottom:40px}
+</style>
+</head>
+<body>
+<div class="barra">
+  <button id="baixar">Baixar PNGs</button>
+  <span id="status">Cada slide vira um PNG 1080x1350 (os arquivos vão pra sua pasta de downloads).</span>
+</div>
+
+<div class="wrap" id="slides">
+
+  <!-- 1. CAPA (escuro) -->
+  <div class="slide dark">
+    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">1 / 5</div></div>
+    <div class="kicker">CATEGORIA DO POST</div>
+    <h1>Título da capa com <em>palavra de impacto</em></h1>
+    <p class="sub">Subtítulo curto que explica a promessa do carrossel.</p>
+    <div class="rodape"><span>@mizy.io</span><span>Arrasta pro lado →</span></div>
+  </div>
+
+  <!-- 2. TEXTO (claro) -->
+  <div class="slide light">
+    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">2 / 5</div></div>
+    <div class="kicker">Primeiro ponto</div>
+    <h2>Um insight por <em>slide</em></h2>
+    <div class="regua"></div>
+    <p>Parágrafo curto, em frases naturais, do jeito que o cliente fala. Máximo de 30 palavras.</p>
+    <div class="rodape"><span>@mizy.io</span><span>mizy</span></div>
+  </div>
+
+  <!-- 3. NÚMERO (escuro) -->
+  <div class="slide dark">
+    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">3 / 5</div></div>
+    <div class="numero">3s</div>
+    <h2>Frase que explica o <em>número</em></h2>
+    <p>Texto de apoio curto que dá contexto ao dado.</p>
+    <div class="rodape"><span>@mizy.io</span><span>mizy</span></div>
+  </div>
+
+  <!-- 4. LISTA (claro) -->
+  <div class="slide light">
+    <div class="topo"><div class="marca"><svg class="selo" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#D97757"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#FFF8F3" stroke="#FFF8F3" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>mizy</div><div class="cont">4 / 5</div></div>
+    <div class="kicker">Passo a passo</div>
+    <h2>Título da <em>lista</em></h2>
+    <div class="item"><div class="num">1</div><p><b>Item um.</b> Explicação curta.</p></div>
+    <div class="item"><div class="num">2</div><p><b>Item dois.</b> Explicação curta.</p></div>
+    <div class="item"><div class="num">3</div><p><b>Item três.</b> Explicação curta.</p></div>
+    <div class="rodape"><span>@mizy.io</span><span>mizy</span></div>
+  </div>
+
+  <!-- 5. CTA FINAL (terracota) -->
+  <div class="slide brand centro">
+    <div class="topo"><div class="marca"></div><div class="cont">5 / 5</div></div>
+    <svg class="selo-grande selo-inv" viewBox="0 0 320 320"><rect x="14" y="14" width="292" height="292" rx="84" fill="#FFF8F3"/><g transform="translate(160 160) scale(.7) translate(-160 -160)"><g fill="#D97757" stroke="#D97757" stroke-width="26" stroke-linejoin="round" stroke-linecap="round"><rect x="52" y="67" width="38" height="183"/><path d="M64 67 Q34 168 165 250 L112 67 Z"/><path d="M248 67 L165 250 L190 250 L275 67 Z"/><rect x="238" y="67" width="38" height="183"/></g></g></svg>
+    <h2>Headline curta de <em>ação</em></h2>
+    <p>Uma linha dizendo o que acontece quando a pessoa age.</p>
+    <div class="botao">Manda SITE no direct</div>
+    <div class="rodape"><span>@mizy.io</span><span>Tecnologia pra empresa, sem complicar</span></div>
+  </div>
+
+  <!--
+  LAYOUT EXTRA: CITAÇÃO (copie o bloco, troque a classe de fundo)
+  <div class="slide dark">
+    <div class="topo">...igual aos outros...</div>
+    <div class="aspas">“</div>
+    <div class="citacao">Frase forte em até 20 palavras.</div>
+    <div class="autor">— Quem disse</div>
+    <div class="rodape">...</div>
+  </div>
+  -->
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js"></script>
+<script>
+document.getElementById('baixar').addEventListener('click', async function () {
+  var btn = this, status = document.getElementById('status');
+  var slides = document.querySelectorAll('.slide');
+  btn.disabled = true;
+  try { await document.fonts.ready; } catch (e) {}
+  for (var i = 0; i < slides.length; i++) {
+    status.textContent = 'Gerando slide ' + (i + 1) + ' de ' + slides.length + '...';
+    var s = slides[i], oldZoom = s.style.zoom;
+    s.style.zoom = '1';
+    try {
+      var url = await htmlToImage.toPng(s, { width: 1080, height: 1350, pixelRatio: 1, cacheBust: true });
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'slide-' + String(i + 1).padStart(2, '0') + '.png';
+      a.click();
+    } catch (e) {
+      status.textContent = 'Erro no slide ' + (i + 1) + '. Tente de novo ou tire print.';
+      s.style.zoom = oldZoom; btn.disabled = false; return;
+    }
+    s.style.zoom = oldZoom;
+    await new Promise(function (r) { setTimeout(r, 400); });
+  }
+  status.textContent = 'Pronto! ' + slides.length + ' PNGs na pasta de downloads.';
+  btn.disabled = false;
+});
+</script>
+</body>
+</html>
